@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasımpatı Çiçeği</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: lightgray;
+            font-family: sans-serif;
+        }
+        canvas {
+            border: 2px solid darkgreen;
+            background-color: white;
+        }
+        h1 {
+            position: absolute;
+            top: 20px;
+            color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kasımpatı Çiçeği</h1>
+    <canvas id="kasımpatıCanvas" width="600" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('kasımpatıCanvas');
+        const ctx = canvas.getContext('2d');
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+
+        // Gövde ve Yapraklar
+        ctx.beginPath();
+        ctx.strokeStyle = "darkgreen";
+        ctx.lineWidth = 5;
+        ctx.moveTo(centerX, centerY + 200); // Başlangıç noktası (aşağıdan)
+        ctx.lineTo(centerX, centerY + 50);  // Yukarı doğru gövde
+        ctx.stroke();
+
+        // Yaprak 1 (sol)
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY + 100);
+        ctx.quadraticCurveTo(centerX - 80, centerY + 50, centerX - 50, centerY + 20);
+        ctx.quadraticCurveTo(centerX - 20, centerY + 70, centerX, centerY + 100);
+        ctx.fillStyle = "darkgreen";
+        ctx.fill();
+        ctx.stroke();
+
+        // Yaprak 2 (sağ)
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY + 100);
+        ctx.quadraticCurveTo(centerX + 80, centerY + 50, centerX + 50, centerY + 20);
+        ctx.quadraticCurveTo(centerX + 20, centerY + 70, centerX, centerY + 100);
+        ctx.fillStyle = "darkgreen";
+        ctx.fill();
+        ctx.stroke();
+
+
+        // Çiçeğin Merkezi
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 20, 0, Math.PI * 2);
+        ctx.fillStyle = "brown";
+        ctx.fill();
+
+        // Kasımpatı Yaprakları (Petals)
+        function drawPetal(color, radius, startAngle, endAngle) {
+            ctx.fillStyle = color;
+            for (let i = 0; i < 360; i += 20) { // Her 20 derecede bir yaprak
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate((i * Math.PI) / 180); // Dereceyi radyana çevir
+
+                ctx.beginPath();
+                ctx.ellipse(0, radius / 2, radius * 0.2, radius * 0.6, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // Farklı katmanlarda yapraklar çiz
+        drawPetal("orange", 60);
+        drawPetal("yellow", 50);
+        drawPetal("gold", 40);
+
+    </script>
+</body>
+</html>
